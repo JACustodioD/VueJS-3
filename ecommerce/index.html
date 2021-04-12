@@ -17,12 +17,12 @@
                 
                 <div class="cart-content__product">
                     <img src="" alt="">
-                    <span>Producto - $ 5000.00</span>
+                    <span> {{ product.name }} - $ {{ new Intl.NumberFormat("es-MX").format(product.price) }} </span>
                 </div>
 
                 <div class="cart-content__product">
                     <img src="" alt="">
-                    <span>Producto - $ 5000.00</span>
+                    <span> {{ product.name }} - $ {{ new Intl.NumberFormat("es-MX").format(product.price) }} </span>
                 </div>
 
             </div>
@@ -38,15 +38,13 @@
                 </div>
             </section>
             <section class="description">
-                <h4>Producto</h4>
+                <h4> {{ product.name.toUpperCase() }} {{ product.stock === 0 ? ":(" : "8)" }} </h4>
                 <span class="badge new">Nuevo</span>
                 <span class="badge offer">Oferta</span>
                 <p class="description__status"></p>
-                <p class="description__price">$ 5000.000</p>
+                <p class="description__price">$ {{ new Intl.NumberFormat("es-MX").format(product.price) }}</p>
                 <p class="description__content">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo recusandae eum sunt eos quod,
-                    voluptates quidem tempora. Eum, ipsum voluptates non aliquid voluptatum delectus nisi vel impedit.
-                    Repudiandae, soluta corrupti.
+                    {{ product.content }}
                 </p>
                 <div class="discount">
                     <span>Código de descuento:</span>
@@ -59,7 +57,30 @@
     <script src="https://unpkg.com/vue@next"></script>
     <script>
         const { createApp } = Vue;
-        const app = createApp();
+        const app = createApp({
+            data() {
+                return {
+                    product: {
+                        name: "Camara",
+                        price: 450_000,
+                        stock: 10,
+                        content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo recusandae eum sunt eos quod,
+                    voluptates quidem tempora. Eum, ipsum voluptates non aliquid voluptatum delectus nisi vel impedit.
+                    Repudiandae, soluta corrupti `,
+                    images: [
+                        {
+                            image: "/images/camara.jpg",
+                            thmbnail: "/images/camara-thumb.jpg"
+                        },
+                        {
+                            image: "/images/camara-2.jpg",
+                            thmbnail: "/images/camara-2-thumb.jpg"
+                        }
+                    ]
+                    }
+                }
+            }
+        });
         app.mount("#app");
     </script>
 </body>
