@@ -11,6 +11,9 @@
         <span p-text="message"></span>
         <br>
         <input type="text" p-model="message">
+        <br><hr>
+        <input type="text" p-model="image">
+        <img p-bind="src:image" alt="not-image">
     </div>
 
     <script src="platzi.js"></script>
@@ -20,7 +23,8 @@
         const app = createApp({
             data(){
                 return {
-                    message: "Hola Vue"
+                    message: "Hola Platzi",
+                    image: "https://via.placeholder.com/600/771796"
                 }
             }
         });
