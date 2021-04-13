@@ -12,12 +12,12 @@
     <div id="app">
         <header>
             <h3>PlatziCommerce</h3>
-            <button class="cart" v-on:click="carOpen = !carOpen" >Carro (0)</button>
+            <button class="cart" v-on:click="carOpen = !carOpen" >Carro ({{ cart.length }})</button>
             <div class="cart-content" v-show="carOpen">
                 
                 <div class="cart-content__product" v-for="product, index in cart" :key="product.name" :class="{'bg-gray': index & 1}">
                     <img v-bind:src="product.images[0].image" :alt="product.name.toUpperCase()">
-                    <span> {{ product.name }} - $ {{ new Intl.NumberFormat("es-MX").format(product.price) }} </span>
+                    <span> {{ product.name }} - $ {{ new Intl.NumberFormat("es-MX").format(product.price) }} ({{ product.quantity }}) </span>
                 </div>
             </div>
         </header>
@@ -48,8 +48,8 @@
                 </p>
                 <div class="discount">
                     <span>Código de descuento:</span>
-                    <input type="text" placeholder="Ingresa tu código" @keyup.enter="product.price *= 50/ 100">
-                    <button :disabled="product.stock === 0" @click="product.stock -= 1">
+                    <input type="text" placeholder="Ingresa tu código" @keyup.enter="applyDiscount($event)">
+                    <button :disabled="product.stock === 0" @click="addToCar()">
                         Agregar al carrito
                     </button>
                 </div> 
@@ -81,72 +81,32 @@
                         }
                     ],
                     new: true,
-                    offer: false
+                    offer: false,
+                    quantity: 1
                     },
                     carOpen: true,
                     activeImage:0,
-                    cart: [
-                        {
-                        name: "Camara",
-                        price: 450_000,
-                        stock: 0,
-                        content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo recusandae eum sunt eos quod,
-                    voluptates quidem tempora. Eum, ipsum voluptates non aliquid voluptatum delectus nisi vel impedit.
-                    Repudiandae, soluta corrupti `,
-                    images: [
-                        {
-                            image: "./images/camara.jpg",
-                            thumbnail: "./images/camara-thumb.jpg"
-                        },
-                        {
-                            image: "./images/camara-2.jpg",
-                            thumbnail: "./images/camara-2-thumb.jpg"
-                        }
-                    ],
-                    new: true,
-                    offer: true
-                    },
-                    {
-                        name: "Camara PL",
-                        price: 520_000,
-                        stock: 10,
-                        content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo recusandae eum sunt eos quod,
-                    voluptates quidem tempora. Eum, ipsum voluptates non aliquid voluptatum delectus nisi vel impedit.
-                    Repudiandae, soluta corrupti `,
-                    images: [
-                        {
-                            image: "./images/camara.jpg",
-                            thumbnail: "./images/camara-thumb.jpg"
-                        },
-                        {
-                            image: "./images/camara-2.jpg",
-                            thumbnail: "./images/camara-2-thumb.jpg"
-                        }
-                    ],
-                    new: true,
-                    offer: true
-                    },
-                    {
-                        name: "Camara PL2",
-                        price: 250_000,
-                        stock: 0,
-                        content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo recusandae eum sunt eos quod,
-                    voluptates quidem tempora. Eum, ipsum voluptates non aliquid voluptatum delectus nisi vel impedit.
-                    Repudiandae, soluta corrupti `,
-                    images: [
-                        {
-                            image: "./images/camara.jpg",
-                            thumbnail: "./images/camara-thumb.jpg"
-                        },
-                        {
-                            image: "./images/camara-2.jpg",
-                            thumbnail: "./images/camara-2-thumb.jpg"
-                        }
-                    ],
-                    new: true,
-                    offer: true
+                    cart: [],
+                    discountCodes: ["PLATZI21", "JACD04", "OTROCODE"]
+                };
+            },
+            methods: {
+                applyDiscount(event){
+                    const discountCodeIndex = this.discountCodes.indexOf(event.target.value);
+                    if(discountCodeIndex > 0){
+                        this.product.price *= 50/ 100;
+                        this.discountCodes.splice(discountCodeIndex, 1);
                     }
-                ]
+                },
+                addToCar(){
+                    const prodIndex = this.cart.findIndex(prod => prod.name === this.product.name);
+
+                    if(prodIndex > 0 ) {
+                        this.cart[prodIndex].quantity += 1;
+                    } else {
+                        this.cart.push(this.product);
+                    }
+                    this.product.stock -= 1;
                 }
             }
         });
