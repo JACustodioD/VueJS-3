@@ -59,10 +59,11 @@
 
     <script src="https://unpkg.com/vue@next"></script>
     <script>
-        const { createApp, ref } = Vue;
+        const { createApp, ref , reactive, toRefs } = Vue;
         const app = createApp({
             setup(){
-                const product = ref({
+                const productState = reactive({
+                    product: {
                     name: "Camara",
                         price: 450_000,
                         stock: 4,
@@ -82,37 +83,37 @@
                     new: true,
                     offer: false,
                     quantity: 1
+                },
+                activeImage: 0
                 });
-                const activeImage = ref(0);
-                const carOpen = ref(false);
 
-                const cart = ref([]);
+                const cartState = reactive({
+                    carOpen: false,
+                    cart:[]
+                });
+
                 function addToCar(){
-                    const prodIndex = cart.value.findIndex(prod => prod.name === product.value.name);
-                    console.log(prodIndex);
+                    const prodIndex = cartState.cart.findIndex(prod => prod.name === productState.product.name);
                     if(prodIndex >= 0 ) {
-                        cart.value[prodIndex].quantity += 1;
+                        cartState.cart[prodIndex].quantity += 1;
                     } else {
-                        cart.value.push(product.value);
+                        cartState.cart.push(productState.product);
                     }
-                    product.value.stock -= 1;
+                    productState.product.stock -= 1;
                 }
                 
                 const discountCodes = ref(["PLATZI21", "JACD04", "OTROCODE"])
                 function applyDiscount(event){
                     const discountCodeIndex = discountCodes.value.indexOf(event.target.value);
                     if(discountCodeIndex > 0){
-                        product.value.price *= 50/ 100;
+                        productState.product.price *= 50/ 100;
                         discountCodes.value.splice(discountCodeIndex, 1);
                     }
                 }
 
                 return {
-                    product,
-                    activeImage,
-
-                    carOpen,
-                    cart,
+                    ...toRefs(productState),
+                    ...toRefs(cartState),
                     addToCar,
 
 
