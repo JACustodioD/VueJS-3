@@ -15,23 +15,16 @@
             <button class="cart" >Carro (0)</button>
             <div class="cart-content" v-show="carOpen">
                 
-                <div class="cart-content__product">
+                <div class="cart-content__product" v-for="product, index in cart" :key="product.name" :class="{'bg-gray': index & 1}">
                     <img v-bind:src="product.images[0].image" :alt="product.name.toUpperCase()">
                     <span> {{ product.name }} - $ {{ new Intl.NumberFormat("es-MX").format(product.price) }} </span>
                 </div>
-
-                <div class="cart-content__product">
-                    <img v-bind:src="product.images[1].image" :alt="product.name.toUpperCase()">
-                    <span> {{ product.name }} - $ {{ new Intl.NumberFormat("es-MX").format(product.price) }} </span>
-                </div>
-
             </div>
         </header>
         <main>
             <section class="product">
                 <div class="product__thumbnails">
-                    <div class="thumb" :class="{ active: activeImage === 0 }" :style="{ backgroundImage: 'url(' + product.images[0].thumbnail+')'}"></div>
-                    <div class="thumb" :class="{ active: activeImage ===  1}" :style="{ backgroundImage: 'url('+ product.images[1].thumbnail+')'}"></div>
+                    <div v-for="image, index in product.images" :key="image.thumbnail" class="thumb" :class="{ active: activeImage === index }" :style="{ backgroundImage: 'url(' + product.images[index].thumbnail+')'}"></div>
                 </div>
                 <div class="product__image">
                     <img src="" alt="">
@@ -84,7 +77,69 @@
                     offer: false
                     },
                     carOpen: true,
-                    activeImage:0
+                    activeImage:0,
+                    cart: [
+                        {
+                        name: "Camara",
+                        price: 450_000,
+                        stock: 0,
+                        content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo recusandae eum sunt eos quod,
+                    voluptates quidem tempora. Eum, ipsum voluptates non aliquid voluptatum delectus nisi vel impedit.
+                    Repudiandae, soluta corrupti `,
+                    images: [
+                        {
+                            image: "/images/camara.jpg",
+                            thumbnail: "/images/camara-thumb.jpg"
+                        },
+                        {
+                            image: "/images/camara-2.jpg",
+                            thumbnail: "/images/camara-2-thumb.jpg"
+                        }
+                    ],
+                    new: true,
+                    offer: true
+                    },
+                    {
+                        name: "Camara PL",
+                        price: 520_000,
+                        stock: 10,
+                        content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo recusandae eum sunt eos quod,
+                    voluptates quidem tempora. Eum, ipsum voluptates non aliquid voluptatum delectus nisi vel impedit.
+                    Repudiandae, soluta corrupti `,
+                    images: [
+                        {
+                            image: "/images/camara.jpg",
+                            thumbnail: "/images/camara-thumb.jpg"
+                        },
+                        {
+                            image: "/images/camara-2.jpg",
+                            thumbnail: "/images/camara-2-thumb.jpg"
+                        }
+                    ],
+                    new: true,
+                    offer: true
+                    },
+                    {
+                        name: "Camara PL2",
+                        price: 250_000,
+                        stock: 0,
+                        content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo recusandae eum sunt eos quod,
+                    voluptates quidem tempora. Eum, ipsum voluptates non aliquid voluptatum delectus nisi vel impedit.
+                    Repudiandae, soluta corrupti `,
+                    images: [
+                        {
+                            image: "/images/camara.jpg",
+                            thumbnail: "/images/camara-thumb.jpg"
+                        },
+                        {
+                            image: "/images/camara-2.jpg",
+                            thumbnail: "/images/camara-2-thumb.jpg"
+                        }
+                    ],
+                    new: true,
+                    offer: true
+                    }
+                ]
                 }
             }
         });
