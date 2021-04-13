@@ -12,7 +12,7 @@
     <div id="app">
         <header>
             <h3>PlatziCommerce</h3>
-            <button class="cart" >Carro (0)</button>
+            <button class="cart" v-on:click="carOpen = !carOpen" >Carro (0)</button>
             <div class="cart-content" v-show="carOpen">
                 
                 <div class="cart-content__product" v-for="product, index in cart" :key="product.name" :class="{'bg-gray': index & 1}">
@@ -24,10 +24,15 @@
         <main>
             <section class="product">
                 <div class="product__thumbnails">
-                    <div v-for="image, index in product.images" :key="image.thumbnail" class="thumb" :class="{ active: activeImage === index }" :style="{ backgroundImage: 'url(' + product.images[index].thumbnail+')'}"></div>
+                    <div v-for="image, index in product.images" :key="image.thumbnail" 
+                    class="thumb" 
+                    :class="{ active: activeImage === index }" 
+                    :style="{ backgroundImage: 'url(' + product.images[index].thumbnail+')'}"
+                    @click="activeImage = index"
+                    ></div>
                 </div>
                 <div class="product__image">
-                    <img src="" alt="">
+                    <img :src="product.images[activeImage].image" alt="product.name">
                 </div>
             </section>
             <section class="description">
@@ -43,8 +48,10 @@
                 </p>
                 <div class="discount">
                     <span>Código de descuento:</span>
-                    <input type="text" placeholder="Ingresa tu código">
-                    <button :disabled="product.stock === 0">Agregar al carrito</button>
+                    <input type="text" placeholder="Ingresa tu código" @keyup.enter="product.price *= 50/ 100">
+                    <button :disabled="product.stock === 0" @click="product.stock -= 1">
+                        Agregar al carrito
+                    </button>
                 </div> 
             </section>
         </main>
@@ -59,7 +66,7 @@
                     product: {
                         name: "Camara",
                         price: 450_000,
-                        stock: 0,
+                        stock: 2,
                         content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo recusandae eum sunt eos quod,
                     voluptates quidem tempora. Eum, ipsum voluptates non aliquid voluptatum delectus nisi vel impedit.
                     Repudiandae, soluta corrupti `,
