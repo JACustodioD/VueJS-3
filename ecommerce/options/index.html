@@ -121,7 +121,6 @@
                     ],
                     carOpen: true,
                     cart: [],
-                    total: 0
                     
                 };
             },
@@ -138,16 +137,13 @@
                     product.stock -= 1;
                 }
             },
-            watch: {
-                cart: {
-                    handler(cart) {
-                        this.total = cart.reduce((prev, curr) => {
+            computed: {
+                total(){
+                    return this.cart.reduce((prev, curr) => {
                             const prevPrice = prev.price || prev;
                             const prevQuatinty = prev.quantity || 1;
                             return prevPrice * prevQuatinty + curr.price * curr.quantity;
                         }, 0);
-                    },
-                    deep: true
                 }
             }
         });
