@@ -15,8 +15,7 @@ app.component("product", {
     </section>
     <section class="description">
         <h4> {{ product.name.toUpperCase() }} {{ product.stock === 0 ? ":(" : "8)" }} </h4>
-        <span class="badge new" v-if="product.new" >Nuevo</span>
-        <span class="badge offer" v-if="product.offer">Oferta</span>
+        <badge :product="product"></badge>
         <p class="description__status" v-if="product.stock === 1 ">último producto disponible</p>
         <p class="description__status" v-else-if="product.stock === 0"> Ya no hay más productos :(</p>
         <p class="description__status" v-else>Que esperas para pedir tu producto</p>
