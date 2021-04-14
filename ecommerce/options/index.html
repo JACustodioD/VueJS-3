@@ -33,92 +33,7 @@
         const app = createApp({
             data() {
                 return {
-                    products: [
-                        {
-                            name: "Camara",
-                            price: 450_000,
-                            stock: 4,
-                            content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo recusandae eum sunt eos quod,
-                                voluptates quidem tempora. Eum, ipsum voluptates non aliquid voluptatum delectus nisi vel impedit.
-                                Repudiandae, soluta corrupti `,
-                            images: [
-                                {
-                                    image: "./images/camara.jpg",
-                                    thumbnail: "./images/camara-thumb.jpg"
-                                },
-                                {
-                                    image: "./images/camara-2.jpg",
-                                    thumbnail: "./images/camara-2-thumb.jpg"
-                                }
-                            ],
-                            new: true,
-                            offer: false,
-                            quantity: 1
-                        },
-                        {
-                            name: "Camara PL",
-                            price: 430_000,
-                            stock: 4,
-                            content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo recusandae eum sunt eos quod,
-                                voluptates quidem tempora. Eum, ipsum voluptates non aliquid voluptatum delectus nisi vel impedit.
-                                Repudiandae, soluta corrupti `,
-                            images: [
-                                {
-                                    image: "./images/camara.jpg",
-                                    thumbnail: "./images/camara-thumb.jpg"
-                                },
-                                {
-                                    image: "./images/camara-2.jpg",
-                                    thumbnail: "./images/camara-2-thumb.jpg"
-                                }
-                            ],
-                            new: false,
-                            offer: false,
-                            quantity: 1
-                        },
-                        {
-                            name: "Camara PL 2",
-                            price: 440_000,
-                            stock: 4,
-                            content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo recusandae eum sunt eos quod,
-                                voluptates quidem tempora. Eum, ipsum voluptates non aliquid voluptatum delectus nisi vel impedit.
-                                Repudiandae, soluta corrupti `,
-                            images: [
-                                {
-                                    image: "./images/camara.jpg",
-                                    thumbnail: "./images/camara-thumb.jpg"
-                                },
-                                {
-                                    image: "./images/camara-2.jpg",
-                                    thumbnail: "./images/camara-2-thumb.jpg"
-                                }
-                            ],
-                            new: true,
-                            offer: true,
-                            quantity: 1
-                        },
-                        {
-                            name: "Camara PL 3",
-                            price: 650_000,
-                            stock: 4,
-                            content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo recusandae eum sunt eos quod,
-                                voluptates quidem tempora. Eum, ipsum voluptates non aliquid voluptatum delectus nisi vel impedit.
-                                Repudiandae, soluta corrupti `,
-                            images: [
-                                {
-                                    image: "./images/camara.jpg",
-                                    thumbnail: "./images/camara-thumb.jpg"
-                                },
-                                {
-                                    image: "./images/camara-2.jpg",
-                                    thumbnail: "./images/camara-2-thumb.jpg"
-                                }
-                            ],
-                            new: false,
-                            offer: true,
-                            quantity: 1
-                        }
-                    ],
+                    products: [],
                     carOpen: true,
                     cart: [],
                     
@@ -145,6 +60,13 @@
                             return prevPrice * prevQuatinty + curr.price * curr.quantity;
                         }, 0);
                 }
+            },
+            created() {
+                fetch("https://my-json-server.typicode.com/iosamuel/demo/products")
+                .then(res => res.json())
+                .then(data => {
+                    this.products = data;
+                });
             }
         });
     </script>
