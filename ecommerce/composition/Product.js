@@ -39,10 +39,8 @@ app.component("product", {
     setup(props, context){
         const productState = reactive({
             activeImage: 0,
-            price_color: "rgb(104, 104, 209)"
+            price_color: computed(() => props.product.stock <= 1 ? "rgb(188, 30, 67)" :"rgb(104, 104, 209)" )
         });
-
-      
         
         const discountCodes = ref(["PLATZI21", "JACD04", "OTROCODE"])
         function applyDiscount(event){
@@ -60,18 +58,12 @@ app.component("product", {
         watch(() => productState.activeImage, (value, oldValue) => {
             console.log(value, oldValue);
         });
-        watch( () => props.product.stock, (stock) => {
-            if(stock <= 1 ) {
-                productState.price_color = "rgb(188, 30, 67)";
-            }
-        });
-
-
+       
 
         return {
             ...toRefs(productState),
             sendToCart,
-
+ 
             applyDiscount
         };
 
