@@ -19,6 +19,7 @@
                     <img v-bind:src="product.images[0].image" :alt="product.name.toUpperCase()">
                     <span> {{ product.name }} - $ {{ new Intl.NumberFormat("es-MX").format(product.price) }} ({{ product.quantity }})</span>
                 </div>
+                <p> Total: $ {{ new Intl.NumberFormat("es-MX").format(total) }} </p>
             </div>
         </header>
         <main>
@@ -28,7 +29,7 @@
 
     <script src="https://unpkg.com/vue@next"></script>
     <script>
-        const { createApp, ref , reactive, toRefs } = Vue;
+        const { createApp, ref , reactive, toRefs, watch } = Vue;
         const app = createApp({
             setup(){
                 const products = ref([
@@ -119,7 +120,8 @@
                 ]);
                 const cartState = reactive({
                     carOpen: false,
-                    cart:[]
+                    cart:[],
+                    total: 0
                 });
                 function addToCar(product){
                     const prodIndex = cartState.cart.findIndex(prod => prod.name === product.name);
@@ -130,6 +132,15 @@
                     }
                     product.stock -= 1;
                 }
+
+                watch(cartState.cart, (value, oldValue) => {
+                    cartState.total = cartState.cart.reduce((prev, curr) => {
+                            const prevPrice = prev.price || prev;
+                            const prevQuatinty = prev.quantity || 1;
+                            return prevPrice * prevQuatinty + curr.price * curr.quantity;
+                        }, 0); 
+                });
+
                 return {
                     ...toRefs(cartState),
                     products,

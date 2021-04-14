@@ -21,7 +21,7 @@ app.component("product", {
         <p class="description__status" v-if="product.stock === 1 ">último producto disponible</p>
         <p class="description__status" v-else-if="product.stock === 0"> Ya no hay más productos :(</p>
         <p class="description__status" v-else>Que esperas para pedir tu producto</p>
-        <p class="description__price">$ {{ new Intl.NumberFormat("es-MX").format(product.price) }}</p>
+        <p class="description__price" :style="{ color: price_color }">$ {{ new Intl.NumberFormat("es-MX").format(product.price) }}</p>
         <p class="description__content">
             {{ product.content }}
         </p>
@@ -38,7 +38,8 @@ app.component("product", {
     emits: ["sendtocart"],
     setup(props, context){
         const productState = reactive({
-            activeImage: 0
+            activeImage: 0,
+            price_color: "rgb(104, 104, 209)"
         });
 
       
@@ -55,6 +56,17 @@ app.component("product", {
         function sendToCart(){
             context.emit("sendtocart", props.product);
         }
+        
+        watch(() => productState.activeImage, (value, oldValue) => {
+            console.log(value, oldValue);
+        });
+        watch( () => props.product.stock, (stock) => {
+            if(stock <= 1 ) {
+                productState.price_color = "rgb(188, 30, 67)";
+            }
+        });
+
+
 
         return {
             ...toRefs(productState),
