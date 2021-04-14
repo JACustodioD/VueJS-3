@@ -22,9 +22,7 @@
             </div>
         </header>
         <main>
-            <product></product>
-            <product></product>
-            <product></product>
+            <product v-for="product in products" :key="product.name" :product="product"></product>
         </main>
     </div>
 
@@ -34,6 +32,92 @@
         const app = createApp({
             data() {
                 return {
+                    products: [
+                        {
+                            name: "Camara",
+                            price: 450_000,
+                            stock: 4,
+                            content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo recusandae eum sunt eos quod,
+                                voluptates quidem tempora. Eum, ipsum voluptates non aliquid voluptatum delectus nisi vel impedit.
+                                Repudiandae, soluta corrupti `,
+                            images: [
+                                {
+                                    image: "./images/camara.jpg",
+                                    thumbnail: "./images/camara-thumb.jpg"
+                                },
+                                {
+                                    image: "./images/camara-2.jpg",
+                                    thumbnail: "./images/camara-2-thumb.jpg"
+                                }
+                            ],
+                            new: true,
+                            offer: false,
+                            quantity: 1
+                        },
+                        {
+                            name: "Camara PL",
+                            price: 430_000,
+                            stock: 4,
+                            content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo recusandae eum sunt eos quod,
+                                voluptates quidem tempora. Eum, ipsum voluptates non aliquid voluptatum delectus nisi vel impedit.
+                                Repudiandae, soluta corrupti `,
+                            images: [
+                                {
+                                    image: "./images/camara.jpg",
+                                    thumbnail: "./images/camara-thumb.jpg"
+                                },
+                                {
+                                    image: "./images/camara-2.jpg",
+                                    thumbnail: "./images/camara-2-thumb.jpg"
+                                }
+                            ],
+                            new: true,
+                            offer: false,
+                            quantity: 1
+                        },
+                        {
+                            name: "Camara PL 2",
+                            price: 440_000,
+                            stock: 4,
+                            content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo recusandae eum sunt eos quod,
+                                voluptates quidem tempora. Eum, ipsum voluptates non aliquid voluptatum delectus nisi vel impedit.
+                                Repudiandae, soluta corrupti `,
+                            images: [
+                                {
+                                    image: "./images/camara.jpg",
+                                    thumbnail: "./images/camara-thumb.jpg"
+                                },
+                                {
+                                    image: "./images/camara-2.jpg",
+                                    thumbnail: "./images/camara-2-thumb.jpg"
+                                }
+                            ],
+                            new: true,
+                            offer: false,
+                            quantity: 1
+                        },
+                        {
+                            name: "Camara PL 3",
+                            price: 650_000,
+                            stock: 4,
+                            content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo recusandae eum sunt eos quod,
+                                voluptates quidem tempora. Eum, ipsum voluptates non aliquid voluptatum delectus nisi vel impedit.
+                                Repudiandae, soluta corrupti `,
+                            images: [
+                                {
+                                    image: "./images/camara.jpg",
+                                    thumbnail: "./images/camara-thumb.jpg"
+                                },
+                                {
+                                    image: "./images/camara-2.jpg",
+                                    thumbnail: "./images/camara-2-thumb.jpg"
+                                }
+                            ],
+                            new: true,
+                            offer: false,
+                            quantity: 1
+                        }
+                    ],
                     carOpen: true,
                     cart: [],
                     
